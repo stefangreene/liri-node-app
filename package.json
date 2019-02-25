@@ -1,0 +1,30 @@
+{
+  "name": "liri-node-app",
+  "version": "1.0.0",
+  "description": "LIRI bootcamp homework",
+  "main": "myLiriAPP.js",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "inquirer": "^6.2.2",
+    "node-spotify-api": "^1.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefangreene/liri-node-app.git"
+  },
+  "keywords": [
+    "bootcamp",
+    "homework",
+    "LIRI"
+  ],
+  "author": "Stefan Greene",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stefangreene/liri-node-app/issues"
+  },
+  "homepage": "https://github.com/stefangreene/liri-node-app#readme"
+}
