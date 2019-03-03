@@ -28,7 +28,7 @@ inquirer
     {
       type: "list",
       message: "Now Search Spotify for a song: First choose a search type?",
-      choices: ["Album", "Artist", "Song"],
+      choices: ["album", "artist", "track"],
       name: "inquirerQuerytype"
     },
     // Here we allow the user to submit their Spotify search.
@@ -44,38 +44,27 @@ inquirer
       name: "confirm",
       default: true
     }
-  ])
-  .then(function(inquirerResponse) {
+    
+  ]).then(function(inquirerResponse) {
+        var queryType = "";
+        var querySearch = "";
+        var movieTitle = "";
 
-var spotifyInput1 = inquirerResponse.inquirerQuerytype;
-var spotifyInput2 = inquirerResponse.inquirerQuerySearch;
-//spotifyInput1 = inqirerQuery.val();
-//spotifyInput2 = inquirerSearch.val();
-// Create an empty variable for holding the query type and search
-var queryType = "";
-var querySearch = "";
+    function prepInput(){
+        spotifyInput1 = inquirerResponse.inquirerQuerytype;
+        queryType = spotifyInput1.replace(/ /g, '+');
+        console.log("QueryType: "+ queryType);
 
-// Loop through all the words in the node arguments
-// And do a little for-loop magic to handle the inclusion of "+"s
-/*for (var z = 0; z < spotifyInput1.length; z++) {
-  if (z > 0 && z < spotifyInput1.length) {
-    queryType = queryType + "+" + spotifyInput1[z];
-  }
-  else {
-    queryType += spotifyInput1[z];
-  }
-}*/
-for (var v = 0; v < spotifyInput2.length; v++) {
-    if (v > 0 && v < spotifyInput2.length) {
-        querySearch = querySearch + "+" + spotifyInput2[v];
-    }
-    else {
-        querySearch += spotifyInput2[v];
-    }
-  }
+        spotifyInput2 = inquirerResponse.inquirerQuerySearch;
+        querySearch = spotifyInput2.replace(/ /g, '+');
+        console.log("Query Search: "+ querySearch);
 
-  console.log(queryType);
-  console.log(querySearch);
+        omdbInput = inquirerResponse.inquirerMovie;
+        movieTitle = omdbInput.replace(/ /g, '+');
+        console.log("Movie Title: "+ movieTitle);
+      }
+      prepInput();
+
 
 //...........establish Spotify id and secret..........
 var spotify = new Spotify({
@@ -83,38 +72,20 @@ var spotify = new Spotify({
     secret: "96ea14fccb464f41b3c08e5d91ec5853"
   });
 
-spotify.search({ type: 'track', query: 'All the Small Things'}, function(err, data) {
+spotify.search({ type: queryType, query: querySearch}, function(err, data) {
     if (err) {
       return console.log('Error occurred: ' + err);
     }
    
-  console.log("data"+data); 
-  console.log("data.item"+data.item); 
+  console.log(data.artists.href); 
+
   });
 
 //................Axios OMDB NPM........................
-
-// Store all of the arguments in an array
-process.argv[inquirerResponse.inquirerMovie];
-var nodeInputs = process.argv.slice().trim();
-//var nodeInputs = inquirerResponse.inquirerMovie;
-// Create an empty variable for holding the movie name
-//nodeInputs = movieInputs.val();
-var movieTitle = "";
-// Loop through all the words in the node argument
-// And do a little for-loop magic to handle the inclusion of "+"s
-for (var i = 0; i < nodeInputs.length; i++) {
-  if (i > 0 && i < nodeInputs.length) {
-    movieTitle = movieTitle + "+" + nodeInputs[i];
-  }
-  else {
-    movieTitle += nodeInputs[i];
-  }
-}
 var queryUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=trilogy";
 //.......debug search information.........
-console.log(queryUrl);
-console.log("nodeinputs"+nodeInputs);
+console.log("queryURL"+queryUrl);
+//console.log("nodeinputs"+nodeInputs);
 
 
 //......request with static movie..........
