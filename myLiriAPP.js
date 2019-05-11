@@ -84,7 +84,7 @@ spotify.search({ type: queryType, query: querySearch}, function(err, data) {
 //................Axios OMDB NPM........................
 var queryUrl = "http://www.omdbapi.com/?t=" + movieTitle + "&y=&plot=short&apikey=trilogy";
 //.......debug search information.........
-console.log("queryURL"+queryUrl);
+//console.log("queryURL"+queryUrl);
 //console.log("nodeinputs"+nodeInputs);
 
 
